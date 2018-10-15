@@ -42,6 +42,49 @@
 # #输出结果为：
 # ABC
 # 中文
+# 如果bytes中包含无法解析的字节,decode()方法报错:
+# print( b'\xe4\xb8\xad\xff'.decode('utf-8'))
+# Traceback (most recent call last):
+#   File "G:/git/-/day01/day02.py", line 46, in <module>
+#     print( b'\xe4\xb8\xad\xff'.decode('utf-8'))
+# UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 3: invalid start byte
+#如果bytes中只有一小部分无效的字节,可以传入errors='ingore'忽略错误的字节:
+# print(b'\xe4\xb8\xad\xff'.decode('utf-8',errors='ignore'))
+#要计算str包含多少个字符,可以用len()函数
+# print(len('ABC'))
+# print(len('中文'))
+# 输出结果为:
+# 3
+# 2
+#len()函数计算的str的字符数，如果换成bytes,len()函数就计算字节数:
+# print(len(b'ABC'))
+# print(len(b'\xe4\xb8\xad\xe6\x96\x87'))
+# print(len('中文'.encode('UTF-8')))
+# 输出结果为:
+# 3
+# 6
+# 6
+#可见，1个中文字符经过UTF-8编码后通常会占用3个字节，而1个英文字符只占用1个字节。
+#在操作字符串的时候,我们经常遇到str和bytes的互相转换。为了避免乱码问题，应该始终坚持使用UTF-8对
+#str和bytes进行转换
+# 由于python的源码也是一个文本文件,所以,当你的源代码包含中文的时候,在保存源代码的时候,就需要在指定保存为
+# UTF-8编码,当python解释器读取源代码的时候,为了让他按UTF-8编码读取,通常在文件开头写上这两行
+# #！/usr/bin/env python3
+# #-*-coding:utf-8-*-
+#第一行注释是为了告诉Linux/OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；
+#第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码。
+
+#格式化
+# 输出格式化字符串
+# python采用的格式化方法和c语言是一致的,用%实现:
+# print('Hello,%s' %'world')
+# print('Hi,%s,you have $%d' %('Michael',10000))
+# 输出结果为：
+# Hello,world
+# Hi,Michael,you have $10000
+
+
+
 
 
 
