@@ -100,14 +100,34 @@ classmates=('Miachel','Bob','Tracy')
 #Python在显示只有1个元素的tuple时，也会加一个逗号,，以免你误解成数学计算意义上的括号。
 
 #最后看一个可变的tuple:
-t=('a','b',['A','B'])
-print(t)
-t[2][0]='X'
-t[2][1]='Y'
-print(t)
+# t=('a','b',['A','B'])
+# print(t)
+# t[2][0]='X'
+# t[2][1]='Y'
+#print(t)
 #输出结果为：
 # ('a', 'b', ['A', 'B'])
 # ('a', 'b', ['X', 'Y'])
+#表面上看 tuple的元素确实变了,但是其实变的不是tuple元素，而是list的元素。
+# tuple一开始指向的list没有改成别的list,所以tuple的不变是说，tuple的每个元素，
+# 指向永远不变。即指向'a',就不能改成指向'b',指向一个list,就不能改成指向其他的对象
+# 但是指向的这样list本身就是可变的
 
+#练习
+#请用索引取出下面list的指定元素：
+L = [
+    ['Apple', 'Google', 'Microsoft'],
+    ['Java', 'Python', 'Ruby', 'PHP'],
+    ['Adam', 'Bart', 'Lisa']
+]
+#打印Apple
+# print(L[0][0])
+# print(L[-3][-3])
+#打印Python
+# print(L[1][1])
+# print(L[-2][-3])
+#打印Lisa
+# print(L[2][2])
+# print(L[-1][-1])
 
-
+#list和tuple是Python内置的有序集合，一个可变，一个不可变。根据需要来选择使用它们。
