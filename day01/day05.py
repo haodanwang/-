@@ -54,5 +54,40 @@
 # Hello,Adam
 
 #break
+#在循环中，break语句可以提前退出循环。例如，本来要循环打印1-100的数字
+# n=1
+# while n<100:
+#     print(n)
+#     n=n+1
+# print('END')
+#上面的代码可以循环打印1-100
+#如果要提前结束循环，可以用break语句
+# n=1
+# while n<100:
+#     if n>10:#当n=11的 条件满足 执行break语句
+#         break #当break语句执行会提前结束当前循环
+#     print(n)
+#     n=n+1
+# print('END')
+#执行上面的代码可以发现 打印1-10以后 紧接着打印END 程序结束
+#可见break的作用是提前结束循环
+
+#continue
+#在循环过程中 也可以通过 continue语句 跳过当前的这次循环 直接开始下一场循环
+# n=0
+# while n<10:
+#     print(n)
+#     n=n+1
+# print('END')
+#上面的程序可以打印出1-10 但是我们只想打印奇数 可以用continue来跳过某些循环
+# n=0
+# while n<10:
+#     n=n+1
+#     if n%2==0: #如果是偶数 执行continue语句 跳出本次循环
+#         continue #continue语句会直接执行下个循环 后续的print()不会执行
+#     print(n)
+
+
+
 
 
