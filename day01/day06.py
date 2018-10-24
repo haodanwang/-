@@ -100,4 +100,80 @@ s.remove(4)
 #set和dcit的唯一区别仅在于没有存储对应的value 但是 set的原理和dict一样
 #所以不可以同样放入可变对象 因为无法判断两个可变对象是否相等 也就无法保证set内部
 #"不会有重复元素" 试试把list放入set 看看是否会报错
-# 
+# a=[1,2,3]
+# b=[2,3,4]
+# s2=set([a,b])
+# print(s2)
+# #输出结果为:
+# Traceback (most recent call last):
+#   File "G:/git/-/day01/day06.py", line 105, in <module>
+#     s2=set([a,b])
+# TypeError: unhashable type: 'list'
+
+#再议不可变对象
+#上面提到了 str是不变对象 list是可变对象
+#对于可变对象  比如list 对list进行操作 list内部的内容是会变化的 比如
+# a=['a','c','b']
+# print(a)
+# a.sort()
+# print(a)
+# #输出结果为:
+# ['a', 'c', 'b']
+# ['a', 'b', 'c']
+#而对于不可变对象呢 比如str 对str进行操作:
+# a='Abc'
+# print(a.replace('A','a'))
+# print(a)
+#输出结果为:
+# abc
+# Abc
+#虽然字符串有个replace()方法 也确实变出了'abc' 但是变量啊最后仍然指向’Abc'
+#把上面代码改成这样的
+# a='Abc'
+# b=a.replace('A','a')
+# print(b)
+# print(a)
+#输出结果为:
+# abc
+# Abc
+#要始终牢记的是 a是变量 而'Abc'才是字符串对象 有时候 我们经常说 对象a的内容是'Abc'
+#但其实a本身是一个变量，它指向的对象的内容才是'abc'：
+#当我们调用a.relace('A','a')的时候 实际上是调用方法replace是作用在字符串对象"Abc"上面的
+#而这个方法虽然名字叫replace 但是却没有改变字符串对象"Abc"的内容 相反 replace()方法创建了
+#一个新的字符串"abc"并且返回 如果我们用变量b指向该字符串 这样就容易理解了 变量a仍然指向
+#原有的字符串"Abc" 但是变量b却指向新的字符串'abc'了
+#所以 对于不可变对象来说 调用对象自身的任意方法也不会改变该对象自身的内容 相反 这些方法
+#会创建新的对象并返回 这样就保证了不可变对象本身永远是不可变的
+
+#使用key-value存储结构的dict在python中非常有用 选择不可变对象作为key非常重要 最常用的key是字符串
+#tuple虽然是不可变对象 但是试试把(1,2,3)和(1,[2,3])放入dict或者set中
+# d={(1,2,3):1}
+# print(d)
+# d1={(1,[2,3])}
+#print(d1)
+#输出结果为:
+# {(1, 2, 3): 1}
+# Traceback (most recent call last):
+#   File "G:/git/-/day01/day06.py", line 152, in <module>
+#     d1={(1,[2,3])}
+# TypeError: unhashable type: 'list'
+
+
+
+
+
+
+
+
+#练习
+# address={'北京':1111,'南京':2222,'合肥':3333}
+# print('请输入地名')
+# add=input()
+# while True:
+#     if add in address.keys():
+#         print('地址为:',add,address.get(add))
+#         break
+#     else:
+#         print('没有这个地址')
+#         addUp=input()
+#         address.update({add:addUp})
