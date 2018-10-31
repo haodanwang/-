@@ -98,8 +98,8 @@ def move(x,y,step,angle=0):
 # 151.96152422706632 70.0
 
 #但是其实这只是一个假象 python函数的返回仍然是个单一值
-r=move(100,100,60,math.pi/6)
-print(r)
+#r=move(100,100,60,math.pi/6)
+#print(r)
 #输出结果为:
 #(151.96152422706632, 70.0)
 #原来返回值是一个tuple 但是 在语法上 返回一个tuple可以省略括号 而多个变量接收同一个tuple
@@ -111,3 +111,31 @@ print(r)
 #函数可以返回多值 但其实就是一个tuple
 
 
+#练习
+#请定义一个函数quadratic(a, b, c)，接收3个参数，返回一元二次方程：
+#ax2 + bx + c = 0的两个解
+def quadratic(a,b,c):
+
+    if a==0:
+        print('此方程不是一元二次方程')
+        n=(-c)/b
+        return n
+    else:
+        del1=b*b-4*a*c
+        if del1<0:
+            print('此方程无解')
+        elif del1==0:
+            print('此方程一个解')
+        else:
+            print('此方程有两个不等的实根')
+            n3=math.sqrt(del1)
+            n1=((-b)+n3)/(2*a)
+            n2=((-b)-n3)/(2*a)
+            return (n1,n2)
+
+
+print(quadratic(1,4,3))
+
+#输出结果为:
+#此方程有两个不等的实根
+#(-1.0, -3.0)
