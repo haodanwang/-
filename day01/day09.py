@@ -182,12 +182,95 @@
 
 #命名关键字参数
 #对于关键字参数 函数的调用者可以传入任意不受限制的关键字参数 至于到底传入了哪些 就需要在函数内部通过kw检查
-def person(name,age,**kw):
-     if 'city' in kw:
-         pass
-     if 'job' in kw:
-         pass
-     print('name:',name,'age:',age,'other:',kw)
+# def person(name,age,**kw):
+#      if 'city' in kw:
+#          pass
+#      if 'job' in kw:
+#          pass
+#      print('name:',name,'age:',age,'other:',kw)
 
 #但是调用者扔可以传入不受限制的关键字参数
-print(person('Jakc',24,city='Beijng',addr='Chaoyang',zipcode='123456'))
+#print(person('Jakc',24,city='Beijng',addr='Chaoyang',zipcode='123456'))
+
+#如果要限制关键字参数的名字 就可以用命名关键字参数 例如 只接收city和job作为关键字参数 这种方式定义的函数如下
+#def person(name,age,*,city,job):
+ #   print(name,age,city,job)
+#和关键字参数**kw不同 命名关键字参数需要一个特殊的分隔符*，*参数后面的视为命名关键字参数
+#调用方式如下:
+#print(person("jack",24,city='Beijing',job='Engineer'))
+#如果函数定义中有了一个可变参数 后面跟着的命名关键字参数就不需要一个特殊的分隔符*
+#def person1(name,age,*args,city,job):
+#    print(name,age,args,city,job)
+#命名关键字参数必须传入参数名 这和位置参数不同，如果没有传入参数名 调用将报错
+#print(person('jack',24,'Beijing','Engineer'))
+# Traceback (most recent call last):
+#   File "G:/git/-/day01/day09.py", line 205, in <module>
+#     print(person('jack',24,'Beijing','Engineer'))
+# TypeError: person() takes 2 positional arguments but 4 were given
+#由于调用时缺少参数名city和job python解释器把这个四个参数均视为位置参数 但person()函数仅接受两个位置参数
+
+#命名关键字参数可以有缺省值 从而简化调用
+# def person(name,age,*,city='Beijing',job):
+#     print(name,age,city,job)
+
+#由于命名关键字参数,city存在默认值 调用时 可以不传入city参数
+#print(person('Jakc',24,job='Engineer'))
+#输出结果为:Jakc 24 Beijing Engineer
+#使用命名关键字参数时候 要特别注意 如果没有可变参数 就必须加一个*作为特殊分隔符
+#如果缺少* python解释器无法识别位置参数和命名关键字参数
+# def person1(name,age,city,job):
+#     #缺少* city和job被视为位置参数
+#     pass
+
+#参数组合 在python定义函数 可以用必选参数 默认参数 可变参数 关键字参数和命名关键字参数
+#这5种参数都可以组合使用 但是请注意 参数定义的顺序必须是:必选参数 默认参数 可变参数 命名关键字参数和关键字参数
+#比如定义一个函数 包含上述若干种参数
+def f1(a,b,c=0,*args,**kw):
+    print('a=',a,'b=',b,'c=',c,'args=',args,'kw=',kw)
+
+def f2(a,b,c=0,*,d,**kw):
+    print('a=',a,'b=',b,'c=',c,'d=',d,'kw=',kw)
+#在函数调用的时候 python解释器会自动按照参数位置和参数名把对应的参数传进去
+#print(f1(1,2))
+#输出结果为:a= 1 b= 2 c= 0 args= () kw= {}
+#print(f1(1,2,c=3))
+#输出结果为：a= 1 b= 2 c= 3 args= () kw= {}
+#print(f1(1,2,3,'a','b'))
+#输出结果为:a= 1 b= 2 c= 3 args= ('a', 'b') kw= {}
+#print(f2(1,2,d=99,ext=None))
+#输出结果为:print(f2(1,2,d=99,ext=None))
+#最神奇的是通过一个tuple和dict 也能调用上述函数
+args=(7,2,3,4)
+kw={'d':99,'x':'#'}
+#print(f1(*args,**kw))
+#输出结果为:a= 7 b= 2 c= 3 args= (4,) kw= {'d': 99, 'x': '#'}
+args1=(2,3,4)
+#print(f2(*args1,**kw))
+#输出结果为:a= 2 b= 3 c= 4 d= 99 kw= {'x': '#'}
+
+#所以 对于任何函数 都可以通过类似于func(*args,**kw)的形式调用它 无论参数是如何定义的
+#虽然可以组合多达5种参数 但是不要同时使用太多的组合 否则函数接口的可理解性会很差
+
+#练习
+#以下的函数允许计算两个数的乘积 请稍加改造 变成可接收一个或者多个数并计算乘积
+def product(*x):
+    sum=1
+    if x!=():
+        for i in x:
+            sum=sum*i
+        return sum
+    else:
+        raise TypeError
+print(product(1,2,3,4))
+
+#小结
+#python的函数具有非常灵活的参数形态 既可以实现简单的调用 又可以传入非常复杂的参数
+#默认参数一定要用不可变对象 如果是可变对象 程序运行时会有逻辑错误
+#要注意定义可变参数和关键字参数的语法:
+#*args是可变参数 args接收的是一个tuple
+#**kw是关键字参数 kw接收的是一个dict 以及调用函数时候如何传入可变参数和关键字参数的语法
+#可变参数既可以直接传入func(1,2,3,4)又可以先组装list或tuple 再通过*args传入：func(*(1,2,3))
+#关键字参数即可以直接传入:func(a=1,b=2) 又可以先组装dict 再通过**kw传入:func(**('a':1,'b':2))
+#使用*args和**kw是python的习惯写法 当然也可以用其他的参数名 但最好使用习惯语法
+#命名关键字参数是为了限制调用者可以传入的参数名 同时提供默认值
+#定义命名的关键字参数在没有任何可变参数的情况下不要忘记写分隔符* 否则定义的将是位置参数
